@@ -11,9 +11,9 @@ const postHandler = require('../utils/post-handler');
 const tokenHandler = require('../utils/token-handler');
 const proxyHandler = require('../handlers/proxy-handler');
 
-const resourceHandler = require('../handlers/media-handler');
+const chatHandler = require('../handlers/chat-handler');
 
-let handlers = resourceHandler.ResourceHandler;
+let handlers = chatHandler.ResourceHandler;
 
 router.get('/get-file/*'
     //, tokenHandler.getToken

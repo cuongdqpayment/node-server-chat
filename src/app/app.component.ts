@@ -18,6 +18,7 @@ import { ApiAuthService } from '../services/apiAuthService';
 import { HomeMenuPage } from '../pages/home-menu/home-menu';
 import { OwnerImagesPage } from '../pages/owner-images/owner-images';
 import { SpeedTestPage } from '../pages/speed-test/speed-test';
+import { ChatHomePage } from '../pages/chat-home/chat-home';
 
 @Component({
   templateUrl: 'app.html'
@@ -227,14 +228,14 @@ export class MyApp {
             }        
           ]
         }
-        ,
+        /* ,
         {
           name: "4. Bản đồ dẫn đường",
           size: "1.3em",
           click: true,
           next: GoogleMapPage,
           icon: "globe"
-        }
+        } */
         ,
         {
           name: "5. Login",

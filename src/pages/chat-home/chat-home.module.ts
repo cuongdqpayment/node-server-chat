@@ -7,7 +7,7 @@ import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
 import { ApiStorageService } from '../../services/apiStorageService';
 //console.log(ApiStorageService.token); //lay token de xem nhu login de vao server neu khong se khong cho
-const socketIOConfigC3: SocketIoConfig = { url: ApiStorageService.apiServer+'?token='+ApiStorageService.token, options: {} };
+const socketIOConfigC3: SocketIoConfig = { url: 'http://localhost:8888?token='+ApiStorageService.token, options: {} };
 
 @NgModule({
   declarations: [

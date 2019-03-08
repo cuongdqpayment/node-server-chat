@@ -22,8 +22,8 @@ function main(isHttp, isHttps) {
   app.use('/chat/auth', proxyAuth); 
 
   //csdl va luu tru file 
-  const chat = require('./routes/chat-sqlite');
-  app.use('/chat/db', chat);
+  const chatResource = require('./routes/chat-sqlite');
+  app.use('/chat/db', chatResource);
 
   
   //ham tra loi cac dia chi khong co
@@ -100,7 +100,7 @@ function main(isHttp, isHttps) {
 }
 
 //=false or port number >1000
-const isHttp = 8080; //9235-->auth; 9236-->resource hoa don; 8080-->file-chats
+const isHttp = 8888; //9235-->auth; 9236-->resource hoa don; 8080-->file; 8888-->chat
 const isHttps = false //8443; 
 
 

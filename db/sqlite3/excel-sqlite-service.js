@@ -19,12 +19,11 @@
 // dich vu tao csdl hoa don ban dau
 // doc excel, tao db, tao table
 const fs = require('fs');
+const config = require('./sqlite-config');
 const SQLiteDAO = require('./sqlite-dao');
-
 const xlsxtojson1st = require("xlsx-to-json-lc");
 const excelToJsonAll = require('convert-excel-to-json');
-const dbFile = './db/media-database.db';
-
+const dbFile = config.database_name;
 
 // = new SQLiteDAO(dbFile); //mat dinh la khoi tao db moi nay
 var db = new SQLiteDAO(dbFile); 

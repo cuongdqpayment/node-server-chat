@@ -1,5 +1,5 @@
 module.exports = {
-  service_key:'api-admin-gate',
+  service_key:'chat-admin-gate',
   keep_silence: false, //dieu khien ghi console.log
-  database_name:'admin-user.db' //ten database
+  database_name:'./db/chat-database.db' //ten database
 };

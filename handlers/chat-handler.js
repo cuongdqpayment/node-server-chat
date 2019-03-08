@@ -1,35 +1,38 @@
 "use strict"
 
-
 const fs = require('fs');
 const mime = require('mime-types');
 const systempath = require('path');
 
-const timeZoneOffset_HH = new Date().getTimezoneOffset()/60/60;
-
 const arrObj = require('../utils/array-object');
-const db_service = require('../db/sqlite3/excel-sqlite-service');
-const dbFilename = './db/media-database.db';
-const excelFilename = './db/media-setting.xlsx';
+const db_service = require('../db/sqlite3/excel-sqlite-promise');
 
+//Upload file excel setting --> table, data from excel
 
-/* 
-//1. Mo db chi chay 1 lan - sua lai db-name trong excel-sqlite-service
-setTimeout(() => {
-    db_service.handler.init(dbFilename); //ket noi db moi neu khac default trong excel-sqlite-service
-}, 1000); //doi 1s ket noi db
-
-
- //2. Tao db - chi chay 1 lan
-//du lieu ban dau duoc tao tu manual bang lenh
-setTimeout(() => {
-    db_service.handler.createDatabase(excelFilename,dbFilename); //ket noi db moi
-}, 3000); //doi 1s ket noi db
-
- */
 
 class ResourceHandler {
-    
+    //khoi create Database
+    /**
+     * 
+     * @param {*} req req.form_data.
+     * @param {*} res 
+     * @param {*} next 
+     */
+    createDbFromExcel(req,res,next){
+        //
+        db_service.handler.createDatabase(req.excelFilename)
+        .then(data=>{
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(JSON.stringify(data));
+        })
+        .catch(err=>{
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end(JSON.stringify(err));
+        });
+    }
+
+
+    //dich vu file service //cua media file
     getPrivateFile(req, res, next) {
         db_service.handler.db().getRst("select url\
                                         from media_files\

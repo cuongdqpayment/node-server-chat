@@ -2,8 +2,9 @@ import { Component, } from '@angular/core';
 import { ApiMediaService } from '../../services/apiMediaService';
 import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiAuthService } from '../../services/apiAuthService';
-import { LoadingController, ModalController } from 'ionic-angular';
+import { LoadingController, ModalController, NavController } from 'ionic-angular';
 import { OwnerImagesPage } from '../owner-images/owner-images';
+import { ChatHomePage } from '../chat-home/chat-home';
 
 @Component({
   selector: 'page-home-menu',
@@ -16,7 +17,9 @@ export class HomeMenuPage {
   userInfo: any;
 
   constructor(
+
     private apiMedia: ApiMediaService
+    , private navCtrl: NavController
     , private apiStorageService: ApiStorageService
     , private auth: ApiAuthService
     , private loadingCtrl: LoadingController
@@ -155,6 +158,10 @@ export class HomeMenuPage {
   // Xử lý sự kiện click button theo id
   onClickAdd() {
     this.openModal(OwnerImagesPage);
+  }
+
+  onClickChat(){
+    this.navCtrl.setRoot(ChatHomePage);
   }
 
   onClickMedia(idx, item) {

@@ -46,6 +46,7 @@ import { ApiSpeedTestService } from '../services/apiSpeedTestService';
 import { ApiMediaService } from '../services/apiMediaService';
 import { ApiLocationService } from '../services/apiLocationService';
 import { ApiMapService } from '../services/apiMapService';
+import { ChatHomePage } from '../pages/chat-home/chat-home';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { ApiMapService } from '../services/apiMapService';
     DynamicListOrderPage,
     GoogleMapPage,
     SignaturePage,
-    TimeAgoPipe
+    TimeAgoPipe,
+    ChatHomePage
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,8 @@ import { ApiMapService } from '../services/apiMapService';
     DynamicMediasPage,
     DynamicListOrderPage,
     GoogleMapPage,
-    SignaturePage
+    SignaturePage,
+    ChatHomePage
   ],
   providers: [
     StatusBar,
