@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle color="primary">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons start *ngIf="slideIndex>0">
+      <button ion-button icon-only color="royal" (click)="goToSlide(0)">
+        <ion-icon name="arrow-back" ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      {{title}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="royal" (click)="listUnread()">
+        <ion-icon name="notifications" ios="ios-notifications" md="md-notifications"></ion-icon>
+        <ion-badge color="danger" *ngIf="unreadCount > 0">{{ unreadCount }}</ion-badge>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="list-avatar-page">
+
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <!-- #id=0 -->
+    <ion-slide>
+      <ion-card>
+        <ion-card-header>
+          Thêm nhóm
+          <button ion-button color="royal" (click)="formAddRoom()">
+            <ion-icon name="add-circle" ios="ios-add-circle" md="md-add-circle"></ion-icon>
+          </button>
+        </ion-card-header>
+        
+        <ion-list>
+          <button ion-item *ngFor="let r of rooms">
+            <ion-avatar item-start>
+              <img src="{{r.image?r.image:image_default}}">
+            </ion-avatar>
+            <h2>{{r?.name?.substring(3)}}</h2>
+            <p>tin nhan cuoi cung</p>
+            <ion-note>3:43 pm</ion-note>
+          </button>
+        </ion-list>
+      </ion-card>
+      
+    </ion-slide>
+    
+    
+    <!-- #id=1 -->
+    <ion-slide id="contentMessages">
+      <ion-grid>
+        <ion-row *ngFor="let message of messages">
+          <ion-col class="other-avatar" col-2 *ngIf="message?.user?.username !== user?.username">
+            <ion-item class="other-avatar">
+              <ion-avatar item-start>
+                <img src="{{message?.user?.image?message?.user?.image.toLowerCase().indexOf('://')>0?message?.user?.image:(authenticationServer + '/get-avatar/' + message?.user?.image + '?token=' + token):image_default}}" />
+              </ion-avatar>
+            </ion-item>
+          </ion-col>
+          <ion-col class="message other_message" offset-1 col-9 *ngIf="message?.user?.username !== user?.username">
+            <div class="nick-name">{{ message?.user?.username }}:</div>
+            <br>
+            <div class="text-message">{{ message?.text }}</div>
+            <br>
+            <div class="time">{{message?.created | date:'dd.MM hh:MM'}}</div>
+          </ion-col>
+          
+          <ion-col class="message my_message" offset-2 col-9 *ngIf="message?.user?.username === user?.username">
+            <div class="nick-name">{{ message?.user?.username }}:</div>
+            <br>
+            <div class="text-message">{{ message?.text }}</div>
+            <br>
+            <div class="time">{{message?.created | date:'dd.MM hh:MM'}}</div>
+          </ion-col>
+          <ion-col class="other-avatar" col-2 *ngIf="message?.user?.username === user?.username">
+            <ion-item class="other-avatar">
+              <ion-avatar item-start>
+                <img src="{{message?.user?.image?message?.user?.image.toLowerCase().indexOf('://')>0?message?.user?.image:(authenticationServer + '/get-avatar/' + message?.user?.image + '?token=' + token):image_default}}" />
+              </ion-avatar>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    
+    
+    <!-- #id=2 -->
+    <ion-slide>
+      <form (ngSubmit)="onSubmit()" [formGroup]="addFromGroup" *ngIf="!(isShowInfo)">
+        <ion-list>
+          <ion-item>
+            <ion-icon name="leaf" item-start></ion-icon>
+            <ion-label floating>Tên nhóm</ion-label>
+            <ion-input type="text" formControlName="room_name"></ion-input>
+            <ion-icon name="add" item-end></ion-icon>
+          </ion-item>
+          <ion-item>
+            Them
+          </ion-item>
+          
+        </ion-list>
+      </form>
+      
+    </ion-slide>
+    
+    <!-- #id=3 -->
+    <ion-slide>
+      <ion-list no-lines>
+        
+        <ion-item class='item-settings' (click)="selectIcon()">
+          <ion-icon name="images" item-start></ion-icon>
+          Icons
+        </ion-item>
+        <ion-item class='item-settings' (click)="callSendLog()">
+          <ion-icon name="add" item-start></ion-icon>
+          <ion-label>Send Log To Server</ion-label>
+        </ion-item>
+        <ion-item class='item-settings' (click)="callLogout()">
+          <ion-icon name="add" item-start></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+        
+      </ion-list>
+    </ion-slide>
+    
+    <!-- #id=4 -->
+    <!-- #id=5 -->
+    <!-- #id=6 -->
+
+
+  </ion-slides>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row class="message_row" *ngIf="slideIndex==1">
+      <ion-col col-10>
+        <ion-item no-lines>
+          <ion-input type="text" placeholder="Gõ nội dung tin nhắn cần gửi" [(ngModel)]="message" (keyup.enter)="sendMessage()"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2>
+        <button ion-button type="button" round color="primary" (click)="sendMessage()" [disabled]="message === ''">
+          <ion-icon name="undo"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
