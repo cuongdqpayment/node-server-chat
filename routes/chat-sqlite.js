@@ -11,7 +11,7 @@ const postHandler = require('../utils/post-handler');
 const tokenHandler = require('../utils/token-handler');
 const proxyHandler = require('../handlers/proxy-handler');
 
-const chatHandler = require('../handlers/chat-handler');
+const chatHandler = require('../handlers/chatdb-handler');
 
 let handlers = chatHandler.ResourceHandler;
 

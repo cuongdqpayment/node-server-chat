@@ -4,7 +4,7 @@
 const url = require('url');
 
 //chi cho phep cac domain chua cac thong tin nhu sau moi duoc phep truy cap
-var Access_Control_Allow_Origin_List=['.mobifone.vn','cuongdq','herokuapp','localhost','file'];
+var Access_Control_Allow_Origin_List=['.mobifone.vn','cuongdq','herokuapp','localhost','file', 'ionic'];
 
 
 function validateOrigin(originStr){

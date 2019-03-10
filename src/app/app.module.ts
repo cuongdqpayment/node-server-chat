@@ -6,6 +6,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
+import {TimeAgoPipe} from 'time-ago-pipe';
+import { SocketIoModule } from 'ng-socket-io';
 
 import { StorageServiceModule } from 'angular-webstorage-service';
 import { ApiStorageService } from '../services/apiStorageService';
@@ -27,7 +29,6 @@ import { DynamicCardSocialPage } from '../pages/dynamic-card-social/dynamic-card
 import { DynamicMediasPage } from '../pages/dynamic-medias/dynamic-medias';
 import { DynamicListOrderPage } from '../pages/dynamic-list-order/dynamic-list-order';
 import { SignaturePage } from '../pages/signature/signature';
-import {TimeAgoPipe} from 'time-ago-pipe';
 
 import { ApiHttpPublicService } from '../services/apiHttpPublicServices';
 import { TreeView } from '../components/tree-view/tree-view';
@@ -46,7 +47,7 @@ import { ApiSpeedTestService } from '../services/apiSpeedTestService';
 import { ApiMediaService } from '../services/apiMediaService';
 import { ApiLocationService } from '../services/apiLocationService';
 import { ApiMapService } from '../services/apiMapService';
-import { ChatHomePage } from '../pages/chat-home/chat-home';
+import { HomeChatPage } from '../pages/home-chat/home-chat';
 
 @NgModule({
   declarations: [
@@ -68,8 +69,8 @@ import { ChatHomePage } from '../pages/chat-home/chat-home';
     DynamicListOrderPage,
     GoogleMapPage,
     SignaturePage,
-    TimeAgoPipe,
-    ChatHomePage
+    HomeChatPage,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -77,6 +78,7 @@ import { ChatHomePage } from '../pages/chat-home/chat-home';
     ReactiveFormsModule,
     HttpClientModule,
     StorageServiceModule,
+    SocketIoModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -98,8 +100,8 @@ import { ChatHomePage } from '../pages/chat-home/chat-home';
     DynamicMediasPage,
     DynamicListOrderPage,
     GoogleMapPage,
-    SignaturePage,
-    ChatHomePage
+    HomeChatPage,
+    SignaturePage
   ],
   providers: [
     StatusBar,

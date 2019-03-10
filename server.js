@@ -22,8 +22,8 @@ function main(isHttp, isHttps) {
   app.use('/chat/auth', proxyAuth); 
 
   //csdl va luu tru file 
-  const chatResource = require('./routes/chat-sqlite');
-  app.use('/chat/db', chatResource);
+  const chatResourceDatabase = require('./routes/chat-sqlite');
+  app.use('/chat/db', chatResourceDatabase);
 
   
   //ham tra loi cac dia chi khong co
@@ -51,14 +51,16 @@ function main(isHttp, isHttps) {
         + portHttp
         + "\n tempdir: " + os.tmpdir()
         + "\n " + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        + "\n***********************\n\n\n "
       );
     });
 
-    //for chat http:
-    io = require('socket.io')(httpServer,{  path:'/chat/socket', //duong dan can live cho client khong trung voi express
-                                            pingInterval: 2000,
-                                            wsEngine: 'ws'
-                                        });
+    //for chat http: 
+    //duong dan can live cho client khong trung duong dan goc
+    //client phai khai option = {path: <trung voi server>} xem default
+    io = require('socket.io')(httpServer,{  path:'/chat/socket.io'
+                                            , pingInterval: 10000
+                                            , wsEngine: 'ws' });
   }
 
   if (isHttps) {
@@ -75,12 +77,14 @@ function main(isHttp, isHttps) {
         + portHttps
         + "\n tempdir: " + os.tmpdir()
         + "\n " + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        + "\n***********************\n\n\n "
       );
     });
 
     //for chat https:
-    io = require('socket.io')(httpsServer,{ path:'/chat/socket', //duong dan can live cho client khong trung voi express
-                                            pingInterval: 2000,
+    //duong dan can live cho client khong trung voi express
+    io = require('socket.io')(httpsServer,{ path:'/chat/socket.io', 
+                                            pingInterval: 10000,
                                             wsEngine: 'ws'
                                         });
   }
@@ -88,14 +92,28 @@ function main(isHttp, isHttps) {
   //------------- CHAT SERVER INCLUDE ------------//
   //khai bao xu ly io
   
-  const ioHandler = require('./chat/chat-handler');
+  const IOHandlerResource = require('./chat/chat-handler');
+  const ioHandler = IOHandlerResource.ChatHandler;
   //truyen bien IO
-  ioHandler.ChatHandler.setIO(io);
+  ioHandler.setIO(io);
+  io.use(ioHandler.corsHandler);
+  io.use(ioHandler.verifyToken);
+  //client side:
+  //const config: SocketIoConfig = { url: 'http://domain.name.io</subbranch>', options: {  path:'/<subpath/>socket.io'} };
+  //root
+  io.on('connection', ioHandler.initSocket);
+  var nsp = process.argv[2] || '/';
+  var slice = Array.prototype.slice;
+  io.of(nsp).on('connection', ioHandler.dynamicNameSpace);
+  console.log('Dynamic namespace:',nsp);
+
+  /* 
+  io.of('/').on('connection', ioHandler.rootChat); //root
   
-  io.use(ioHandler.ChatHandler.verify);
-  io.of('/').on('connection', ioHandler.ChatHandler.rootChat);
-  io.of('/app-online').on('connection', ioHandler.ChatHandler.appOnline);
-  io.of('/c3-chat').on('connection', ioHandler.ChatHandler.c3Online);
+  //subbranch = app-online
+  io.of('/app-online').on('connection', ioHandler.appOnline); //branch 
+  io.of('/c3-chat').on('connection', ioHandler.c3Online); 
+  */
 
 }
 

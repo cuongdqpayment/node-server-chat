@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChatHomePage } from './chat-home';
 
-//room chat c3 rieng nhe
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
 
-import { ApiStorageService } from '../../services/apiStorageService';
-//console.log(ApiStorageService.token); //lay token de xem nhu login de vao server neu khong se khong cho
-const socketIOConfigC3: SocketIoConfig = { url: 'http://localhost:8888?token='+ApiStorageService.token, options: {} };
+const configSocketIo: SocketIoConfig = { url: 'http://localhost:8888/chat'
+                                          , options: {  path:'/chat/socket.io'
+                                                      , pingInterval: 5000
+                                                      , wsEngine: 'ws'
+                                          } };
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ const socketIOConfigC3: SocketIoConfig = { url: 'http://localhost:8888?token='+A
   ],
   imports: [
     IonicPageModule.forChild(ChatHomePage),
-    SocketIoModule.forRoot(socketIOConfigC3)
+    SocketIoModule.forRoot(configSocketIo)
   ],
 })
 export class ChatHomePageModule {}

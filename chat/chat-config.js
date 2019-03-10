@@ -1,7 +1,8 @@
 module.exports = {
       userType: '$U#',
-      roomType: '$R#',
-      client_join_room:'verify-user-room-token',
+      roomType: '$R#'
+      
+      /* client_join_room:'verify-user-room-token',
       server_reply_room: 'server-send-room-chating',
       client_send_message: 'client-send-message',
       server_emit_message: 'server-emit-message',
@@ -20,6 +21,6 @@ module.exports = {
       event_logout: 'logout',
       event_chat_setting: 'event_chat_setting',
       event_chat_search: 'event_chat_search',
-      event_chat_add_group:'event_chat_add_group',
+      event_chat_add_group:'event_chat_add_group', */
 
   };

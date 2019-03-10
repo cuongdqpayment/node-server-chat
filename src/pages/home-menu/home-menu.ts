@@ -4,7 +4,7 @@ import { ApiStorageService } from '../../services/apiStorageService';
 import { ApiAuthService } from '../../services/apiAuthService';
 import { LoadingController, ModalController, NavController } from 'ionic-angular';
 import { OwnerImagesPage } from '../owner-images/owner-images';
-import { ChatHomePage } from '../chat-home/chat-home';
+import { HomeChatPage } from '../home-chat/home-chat';
 
 @Component({
   selector: 'page-home-menu',
@@ -59,6 +59,9 @@ export class HomeMenuPage {
           ) {
 
             this.userInfo = login.user_info;
+            
+            //??????????
+            //console.log(this.userInfo, login.token);
 
             this.auth.getDynamicUrl(ApiStorageService.mediaServer + "/db/list-groups?limit=12&offset=0", true)
               .then(data => {
@@ -161,7 +164,10 @@ export class HomeMenuPage {
   }
 
   onClickChat(){
-    this.navCtrl.setRoot(ChatHomePage);
+    //this.navCtrl.setRoot(ChatHomePage);
+    this.navCtrl.push(HomeChatPage, {
+      user: this.userInfo, 
+      token: this.apiStorageService.getToken() });
   }
 
   onClickMedia(idx, item) {
